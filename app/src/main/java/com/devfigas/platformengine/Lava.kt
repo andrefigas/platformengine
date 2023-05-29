@@ -14,7 +14,7 @@ class Lava(private val context: Context, private val displayWidth : Float) : Gam
     ) {
 
     companion object {
-        private val spritesRes = listOf(
+        private val spritesRes = arrayOf(
             R.drawable.lava0,
             R.drawable.lava1
         )
@@ -23,12 +23,12 @@ class Lava(private val context: Context, private val displayWidth : Float) : Gam
     private var currentSprite = 0
     override fun bitmap(): Bitmap {
         val resources = context.resources
-        val bmp = BitmapFactory.decodeResource(resources, spritesRes[currentSprite / 10])
+        val bmp = BitmapFactory.decodeResource(resources, spritesRes[currentSprite])
         return Bitmap.createScaledBitmap(bmp, displayWidth.toInt(), bmp.height, false)
     }
 
     override fun update() {
-        currentSprite = (currentSprite + 1) % (spritesRes.size * 10)
+        currentSprite = getFrame(spritesRes, 1000)
     }
 
 }

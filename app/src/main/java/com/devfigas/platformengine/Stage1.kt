@@ -17,7 +17,7 @@ class Stage1(context: Context, displayWidth : Float, displayHeight : Float) : St
        }
 
        // Platforms
-       add(5 , platform) { i ->
+        add(5 , platform) { i ->
            generatePlatformPosition(displayWidth, displayHeight, i)
         }
 

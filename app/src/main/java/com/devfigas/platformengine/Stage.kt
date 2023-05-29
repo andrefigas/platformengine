@@ -57,11 +57,11 @@ abstract class Stage(private val displayWidth : Float) {
         }
 
         val collision = colliders.any{ element ->
-            val gameObjectCollider = element.collisionBox()
+            val gameObjectCollider = element.collisionBox()!!
             //check collision between colliders
             colliders.filter { it.gameObject() != element.gameObject()}
                 .any { gameElement ->
-                    gameElement.collisionBox().move(x = move)
+                    gameElement.collisionBox()!!.move(x = move)
                         .intersect(gameObjectCollider)
                 }
         }
@@ -164,7 +164,6 @@ abstract class Stage(private val displayWidth : Float) {
             this.jumper = null
         }
     }
-
     /**
      * return false if damaged
      */
@@ -176,7 +175,7 @@ abstract class Stage(private val displayWidth : Float) {
     private fun move(gameObject: GameObject, x : Float, y : Float) : Boolean {
         val entry = element(gameObject)
         val position = entry.position().move(x, y)
-        val objectCollider = entry.collisionBox().move(x,y)
+        val objectCollider = entry.collisionBox()!!.move(x,y)
         val objectHitBox = entry.hitBox()?.move(x,y)
 
         if(objectHitBox != null){
@@ -195,7 +194,7 @@ abstract class Stage(private val displayWidth : Float) {
                     return@forEach
                 }
 
-                if (objectCollider.intersect(element.collisionBox().move(x = move))){
+                if (objectCollider.intersect(element.collisionBox()!!.move(x = move))){
                     return true
                 }
             }
@@ -227,11 +226,15 @@ fun GameElement.gameObject(): GameObject {
     return value
 }
 
-private fun GameElement.collisionBox(): RectF {
+fun GameElement.collisionBox(): RectF? {
+    if(gameObject().collisionBox == null){
+        return null
+    }
+
     return position().padding(gameObject().collisionBox)
 }
 
-private fun GameElement.hitBox(): RectF? {
+fun GameElement.hitBox(): RectF? {
     if(gameObject().hitBox == null){
         return null
     }
@@ -239,7 +242,7 @@ private fun GameElement.hitBox(): RectF? {
     return position().padding(gameObject().hitBox)
 }
 
-private fun RectF.padding(other : RectF?): RectF {
+fun RectF.padding(other : RectF?): RectF {
     val rect = RectF(this)
     if(other != null){
         rect.top += other.top
@@ -251,7 +254,7 @@ private fun RectF.padding(other : RectF?): RectF {
     return rect
 }
 
-private fun RectF.move(x : Float = 0f, y : Float = 0f): RectF {
+fun RectF.move(x : Float = 0f, y : Float = 0f): RectF {
     return RectF(this).apply {
         top += y
         bottom += y

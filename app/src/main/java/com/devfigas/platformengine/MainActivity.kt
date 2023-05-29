@@ -1,20 +1,23 @@
 package com.devfigas.platformengine
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity(), GameScene.GameListener {
 
-    lateinit var scene: GameScene
+    lateinit var scene: GameScene1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Engine.debugger.alphaLayer(150).collisionBox().hitBox()
+
         scene = findViewById(R.id.scene)
         scene.listener = this
 

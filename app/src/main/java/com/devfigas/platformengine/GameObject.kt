@@ -3,6 +3,7 @@ package com.devfigas.platformengine
 import android.graphics.Bitmap
 import android.graphics.RectF
 
+//todo: split behaviour instead of use properties
 abstract class GameObject(var collisionBox : RectF? = null,
                           var hitBox : RectF? = null,
                           val horizontalFreeze : Boolean = false,
@@ -16,5 +17,11 @@ abstract class GameObject(var collisionBox : RectF? = null,
 
     open fun update(){
 
+    }
+
+    fun getFrame(frames : Array<Int>, duration : Long): Int {
+        val dt = (Engine.deltaTime % (frames.size * duration))
+        val frame = dt / duration
+        return frame.toInt()
     }
 }

@@ -14,7 +14,7 @@ class Player(private val context: Context) : GameObject(
 ) {
 
     companion object {
-        private val spritesRes = listOf(
+        private val spritesRes = arrayOf(
             R.drawable.cat0,
             R.drawable.cat1,
             R.drawable.cat2,
@@ -29,7 +29,7 @@ class Player(private val context: Context) : GameObject(
     override fun bitmap() : Bitmap = BitmapFactory.decodeResource(context.resources, spritesRes[currentSprite])
 
     override fun update() {
-        currentSprite = (currentSprite + 1) % spritesRes.size
+        currentSprite = getFrame(spritesRes, 100)
     }
 
 }

@@ -1,0 +1,5 @@
+- name it
+✓ - define repository place
+✓ - consider delta time on frame transitions
+- add circular colliders
+- try to support other game formats beyond platform games
